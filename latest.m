@@ -1,13 +1,13 @@
 %change those
-original_video = "0.avi";
-output_folder = "frames";
+original_video = "a.avi";
+output_folder = "frames/";
 
-video_explode(original_video, output_folder);
-a = dir([output_folder '/*.jpg']);
-len = size(a,1);
+%video_explode(original_video, output_folder);
 
+img_list = dir(strcat(output_folder, '/*.jpg'));
+len = size(img_list,1);
 len = len-mod(len,10); %?
-img_path_list = dir(strcat((output_folder, ' *.jpg'));
+
 
 % obj = VideoReader(file_path);
 % len = obj.NumberOfFrames;
@@ -18,14 +18,17 @@ r=1;
 d=1;
 picnum=1;
 ifxy=1;
+
+disp("start");
 for i=1:10:len
-clearvars -except i perviousxy ifxy obj test len;
+disp("    iteration "+i);    
+clearvars -except i perviousxy ifxy obj test len img_list output_folder;
 r=1;
 d=1;
 picnum=1;
 
 for j=i:i+10
-    image_name=img_path_list(j).name;
+    image_name=img_list(j).name;
     image=imread(strcat(output_folder,image_name));
     %image = read(obj,j);
     
@@ -48,7 +51,7 @@ for j=i:i+10
     [H,T,R]=hough(edgeimg,'RhoResolution',1.5,'Theta',-90:1.3:89);
     P  = houghpeaks(H,5);
     lines = houghlines(edgeimg,T,R,P,'FillGap',60,'MinLength',50);
-
+    disp("     found lines");
 %   figure;
 %   imshow(edgeimg);
 %   hold on;
@@ -94,6 +97,7 @@ for j=i:i+10
              end
         end
     end
+    disp("      solved for the lines");
 end
 if exist('cornerarea','var')
 kx=[];
@@ -139,9 +143,8 @@ kky=nonzeros(ky);
 %     hold on;
 % end
 
-% % %?????????????ROI
 perviousxy{ifxy}=[kkx,kky];
-for afr=1:length(kkx);%??ROI?????
+for afr=1:length(kkx);%ROI
     sizex=200;
     sizey=200;
     xback=100;
@@ -162,11 +165,14 @@ for afr=1:length(kkx);%??ROI?????
         ROI{afr}=[kkx(afr)-xback,kky(afr)-yback,sizex,sizey];
     end
 end
+disp("      did ROI");
+
 picnum=1;   
 sizeROI=size(ROI);
 for nj=i:i+9
      figure;
-        image = read(obj,nj);
+        image_name=img_list(nj).name;
+        image=imread(strcat(output_folder,image_name));
 %         image=imresize(image,0.3);
 %         figure;
 %         imshow(edgeimglist{picnum});
@@ -190,6 +196,7 @@ for nj=i:i+9
 
         close;
 end
+disp("    did corners");
 else
      for nj=i:i+9
            figure;
