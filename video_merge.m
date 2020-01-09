@@ -6,7 +6,7 @@ function video_merge(input_folder, output) %output: name or full path; [AVI]
     imageNames = {imageNames.name}';
 
     outputVideo = VideoWriter(output);
-    outputVideo.FrameRate = 10; %!
+    outputVideo.FrameRate = 15; %!
     open(outputVideo);
 
     for ii = 1:length(imageNames)
@@ -15,6 +15,7 @@ function video_merge(input_folder, output) %output: name or full path; [AVI]
     end
 
     close(outputVideo)
+    disp("Video has been made from frames");
 end
 
 

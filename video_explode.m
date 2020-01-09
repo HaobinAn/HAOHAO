@@ -12,6 +12,7 @@ function video_explode(video, output_folder)
        imwrite(img,fullname)    % Write out to a JPEG file (img1.jpg, img2.jpg, etc.)
        ii = ii+1;
     end
+    disp("Video has been split into frames");
 end
 
 
