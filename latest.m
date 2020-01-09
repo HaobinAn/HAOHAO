@@ -21,7 +21,7 @@ ifxy=1;
 
 disp("start");
 for i=1:10:len
-disp("    iteration "+i);    
+disp("    iteration "+(i-1)/10);    
 clearvars -except i perviousxy ifxy obj test len img_list output_folder;
 r=1;
 d=1;
